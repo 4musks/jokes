@@ -19,6 +19,21 @@ app.get("/", async (req, res, next) => {
   }
 });
 
+app.get("/fact", async (req, res, next) => {
+  try {
+    const response = await axios.get("https://some-random-api.ml/facts/dog");
+
+    const fact = response.data.fact;
+
+    return res.status(200).json({
+      fact,
+    });
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
+
 app.use((req, res, next) => {
   return res.status(404).json({
     error: "Not Found",
