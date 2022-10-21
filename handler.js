@@ -34,6 +34,20 @@ app.get("/fact", async (req, res, next) => {
   }
 });
 
+app.get("/people", async (req, res, next) => {
+  try {
+    const response = await axios.get("https://datausa.io/api/data?drilldowns=Nation&measures=Population");
+
+    const people = response.data.data;
+
+    return res.status(200).json({
+      people,
+    });
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+});
 app.use((req, res, next) => {
   return res.status(404).json({
     error: "Not Found",
